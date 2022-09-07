@@ -101,16 +101,10 @@ fi
 [ -d "/data/playlists" ] || mkdir -p "/data/playlists"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [ -d "/config/mpd" ] || mkdir -p "/config/mpd"
-[ -d "/config/nginx" ] || mkdir -p "/config/nginx"
 [ -d "/config/navidrome" ] || mkdir -p "/config/navidrome"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 [ -f "/config/mpd/mpd.conf" ] || cp -Rf "/etc/mpd.conf" "/config/mpd/mpd.conf"
-[ -f "/config/nginx/navidrome.conf" ] || cp -Rf "/etc/nginx/navidrome.conf" "/config/navidrome.conf"
 [ -f "/config/navidrome/navidrome.toml" ] || cp -Rf "/etc/navidrome/navidrome.toml" "/config/navidrome/navidrome.toml"
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-if [ ! -L "/etc/nginx/http.d/default.conf" ] && [ -f "/config/nginx/navidrome.conf" ]; then
-  ln -sf "/config/nginx/navidrome.conf" "/etc/nginx/http.d/default.conf"
-fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if ! pgrep mpd &>/dev/null; then
   [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
@@ -142,7 +136,6 @@ healthcheck) # Docker healthcheck
 
 *) # Execute primary command
   if [ $# -eq 0 ]; then
-    nginx
     mpd "/config/mpd/mpd.conf"
     navidrome --configfile "/config/navidrome/navidrome.toml"
   else

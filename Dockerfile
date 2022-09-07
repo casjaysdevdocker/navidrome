@@ -1,5 +1,7 @@
 FROM casjaysdevdocker/alpine:latest as build
 
+ARG alpine_version=edge
+
 ARG LICENSE=WTFPL \
   IMAGE_NAME=music \
   TIMEZONE=America/New_York \
@@ -12,11 +14,11 @@ ENV SHELL=/bin/bash \
 
 RUN mkdir -p /bin/ /config/ /data/ && \
   rm -Rf /bin/.gitkeep /config/.gitkeep /config/*/.gitkeep /data/.gitkeep /data/*/.gitkeep /etc/apk/repositories && \
-  echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
-  echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-  echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+  echo "http://dl-cdn.alpinelinux.org/alpine/$alpine_version/main" >> /etc/apk/repositories && \
+  echo "http://dl-cdn.alpinelinux.org/alpine/$alpine_version/community" >> /etc/apk/repositories && \
+  echo "http://dl-cdn.alpinelinux.org/alpine/$alpine_version/testing" >> /etc/apk/repositories && \
   apk update -U --no-cache && \
-  apk add mpd navidrome nginx
+  apk add --no-cache mpd navidrome
 
 COPY ./bin/. /usr/local/bin/
 COPY ./config/. /etc/
