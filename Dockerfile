@@ -12,6 +12,7 @@ ENV SHELL=/bin/bash \
 
 RUN mkdir -p /bin/ /config/ /data/ && \
   rm -Rf /bin/.gitkeep /config/.gitkeep /config/*/.gitkeep /data/.gitkeep /data/*/.gitkeep && \
+  sed -i 's|3.16|edge|g' /etc/apk/repositories && \
   apk update -U --no-cache && \
   apk add mpd navidrome nginx
 
