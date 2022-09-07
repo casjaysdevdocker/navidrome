@@ -97,7 +97,12 @@ fi
 if [ ! -L "/etc/nginx/http.d/default.conf" ]; then
   ln -sf "/config/nginx/navidrome.conf" "/etc/nginx/http.d/default.conf"
 fi
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+if ! pgrep mpd &>/dev/null; then
+  [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
+fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+chmod 777 -R /data/mpd /data/navidrome /data/music /data/playlists
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 case "$1" in
 --help) # Help message
@@ -109,9 +114,10 @@ case "$1" in
   ;;
 
 healthcheck) # Docker healthcheck
-  echo "$(uname -s) $(uname -m) is running"
-  echo _other_commands here
-  exitCode=$?
+  pgrep mpd &>/dev/null &&
+    pgrep nginx &>/dev/null &&
+    pgrep navidrome &>/dev/null
+  exit $?
   ;;
 
 */bin/sh | */bin/bash | bash | shell | sh) # Launch shell
@@ -122,8 +128,8 @@ healthcheck) # Docker healthcheck
 
 *) # Execute primary command
   if [ $# -eq 0 ]; then
-    [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
-    mpd --no-daemon /config/mpd/mpd.conf &
+    nginx
+    mpd /config/mpd/mpd.conf
     navidrome --configfile /config/navidrome/navidrome.toml
   else
     __exec_bash "/bin/bash"
