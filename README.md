@@ -18,9 +18,9 @@ docker run -d \
 --name casjaysdevdocker-music \
 --hostname casjaysdev-music \
 -e TZ=${TIMEZONE:-America/New_York} \
--v $HOME/.local/share/docker/storage/music/music/data:/data \
--v $HOME/.local/share/docker/storage/music/music/config:/config \
--p 80:80 \
+-v $HOME/.local/share/docker/storage/music/data:/data \
+-v $HOME/.local/share/docker/storage/music/config:/config \
+-p 19020:80 \
 -p 6600:6600 \
 casjaysdevdocker/music:latest
 ```
