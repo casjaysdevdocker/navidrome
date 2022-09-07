@@ -19,7 +19,7 @@ RUN mkdir -p /bin/ /config/ /data/ && \
   apk add mpd navidrome nginx
 
 COPY ./bin/. /usr/local/bin/
-COPY ./config/. /config/
+COPY ./config/. /etc/
 COPY ./data/. /data/
 
 FROM scratch

@@ -98,6 +98,19 @@ if [ ! -L "/etc/nginx/http.d/default.conf" ]; then
   ln -sf "/config/nginx/navidrome.conf" "/etc/nginx/http.d/default.conf"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[ -d "/data/mpd" ] || mkdir -p "/data/mpd"
+[ -d "/data/music" ] || mkdir -p "/data/music"
+[ -d "/data/navidrome" ] || mkdir -p "/data/navidrome"
+[ -d "/data/playlists" ] || mkdir -p "/data/playlists"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[ -d "/config/mpd" ] || mkdir -p "/config/mpd"
+[ -d "/config/nginx" ] || mkdir -p "/config/nginx"
+[ -d "/config/navidrome" ] || mkdir -p "/navidrome/mpd"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+[ -f "/config/mpd/mpd.conf" ] || cp -Rf "/etc/mpd.conf" "/config/mpd/mpd.conf"
+[ -f "/config/nginx/navidrome.conf" ] || cp -Rf "/etc/nginx/navidrome.conf" "/config/navidrome.conf"
+[ -f "/config/navidrome/navidrome.toml" ] || cp -Rf "/etc/navidrome/navidrome.toml" "/config/navidrome/navidrome.toml"
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if ! pgrep mpd &>/dev/null; then
   [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
 fi
