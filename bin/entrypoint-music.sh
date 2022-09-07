@@ -9,11 +9,11 @@
 # @@Copyright        :  Copyright: (c) 2022 Jason Hempstead, Casjays Developments
 # @@Created          :  Tuesday, Sep 06, 2022 21:32 EDT
 # @@File             :  entrypoint-music.sh
-# @@Description      :  
+# @@Description      :
 # @@Changelog        :  New script
 # @@TODO             :  Better documentation
-# @@Other            :  
-# @@Resource         :  
+# @@Other            :
+# @@Resource         :
 # @@Terminal App     :  no
 # @@sudo/root        :  no
 # @@Template         :  other/docker-entrypoint
@@ -94,6 +94,9 @@ fi
 [ -f "/etc/.env.sh" ] && rm -Rf "/etc/.env.sh"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Additional commands
+if [ ! -L "/etc/nginx/http.d/default.conf" ]; then
+  ln -sf "/config/nginx/navidrome.conf" "/etc/nginx/http.d/default.conf"
+fi
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 case "$1" in
@@ -119,7 +122,9 @@ healthcheck) # Docker healthcheck
 
 *) # Execute primary command
   if [ $# -eq 0 ]; then
-    __exec_bash "/bin/bash"
+    [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
+    mpd --no-daemon /config/mpd/mpd.conf &
+    navidrome --configfile /config/navidrome/navidrome.toml
   else
     __exec_bash "/bin/bash"
   fi

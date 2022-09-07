@@ -21,6 +21,7 @@ docker run -d \
 -v $HOME/.local/share/docker/storage/music/music/data:/data \
 -v $HOME/.local/share/docker/storage/music/music/config:/config \
 -p 80:80 \
+-p 6600:6600 \
 casjaysdevdocker/music:latest
 ```
 
