@@ -11,8 +11,10 @@ ENV SHELL=/bin/bash \
   TZ=$TIMEZONE
 
 RUN mkdir -p /bin/ /config/ /data/ && \
-  rm -Rf /bin/.gitkeep /config/.gitkeep /config/*/.gitkeep /data/.gitkeep /data/*/.gitkeep && \
-  sed -i 's|v3.16|edge|g' /etc/apk/repositories && \
+  rm -Rf /bin/.gitkeep /config/.gitkeep /config/*/.gitkeep /data/.gitkeep /data/*/.gitkeep /etc/apk/repositories && \
+  echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+  echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+  echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
   apk update -U --no-cache && \
   apk add mpd navidrome nginx
 
