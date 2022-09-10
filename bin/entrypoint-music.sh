@@ -123,7 +123,6 @@ case "$1" in
 
 healthcheck) # Docker healthcheck
   pgrep mpd &>/dev/null &&
-    pgrep nginx &>/dev/null &&
     pgrep navidrome &>/dev/null
   exit $?
   ;;
