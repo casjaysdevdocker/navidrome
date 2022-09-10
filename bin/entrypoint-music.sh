@@ -122,9 +122,11 @@ case "$1" in
   ;;
 
 healthcheck) # Docker healthcheck
-  pgrep mpd &>/dev/null &&
-    pgrep navidrome &>/dev/null
-  exit $?
+  if pgrep mpd &>/dev/null && pgrep navidrome &>/dev/null; then
+    exit 0
+  else
+    exit 1
+  fi
   ;;
 
 */bin/sh | */bin/bash | bash | shell | sh) # Launch shell
