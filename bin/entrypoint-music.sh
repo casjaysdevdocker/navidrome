@@ -47,14 +47,15 @@ __exec_bash() {
   return ${exitCode:-$?}
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-__mpd_start() {
-  pgrep mpd &>/dev/null || mpd --verbose /config/mpd/mpd.conf
+__start() {
+  pgrep mpd &>/dev/null || mpd /config/mpd/mpd.conf
   sleep 10
-  if pgrep mpd &>/dev/null; then 
+  if pgrep mpd &>/dev/null; then
     mpc status 2>&1 | grep -q 'playing' || mpc play &>/dev/null
-  else 
+  else
     echo "MPD seems to have not started" 1>&2
   fi
+  navidrome --configfile "/config/navidrome/navidrome.toml"
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Define default variables
@@ -147,8 +148,7 @@ healthcheck) # Docker healthcheck
 
 *) # Execute primary command
   if [ $# -eq 0 ]; then
-    __mpd_start &
-    navidrome --configfile "/config/navidrome/navidrome.toml"
+    __start
   else
     __exec_bash "$@"
   fi

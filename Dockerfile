@@ -5,7 +5,7 @@ ARG alpine_version=edge
 ARG LICENSE=WTFPL \
   IMAGE_NAME=music \
   TIMEZONE=America/New_York \
-  PORT=6600
+  PORT=80
 
 ENV SHELL=/bin/bash \
   TERM=xterm-256color \
@@ -18,7 +18,8 @@ RUN mkdir -p /bin/ /config/ /data/ && \
   echo "http://dl-cdn.alpinelinux.org/alpine/$alpine_version/community" >> /etc/apk/repositories && \
   echo "http://dl-cdn.alpinelinux.org/alpine/$alpine_version/testing" >> /etc/apk/repositories && \
   apk update -U --no-cache && \
-  apk add --no-cache mpd mpc navidrome
+  apk add --no-cache mpd mpc navidrome && \
+  rm -Rf /etc/mpd.conf
 
 COPY ./bin/. /usr/local/bin/
 COPY ./config/. /etc/
