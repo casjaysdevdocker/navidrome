@@ -5,7 +5,7 @@ ARG alpine_version=edge
 ARG LICENSE=WTFPL \
   IMAGE_NAME=music \
   TIMEZONE=America/New_York \
-  PORT=
+  PORT=6600
 
 ENV SHELL=/bin/bash \
   TERM=xterm-256color \
