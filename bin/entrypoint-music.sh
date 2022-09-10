@@ -52,6 +52,7 @@ __start() {
     mpd --verbose /config/mpd/mpd.conf
   fi
   sleep 10
+  mpc queued | grep '^' mpc load all
   if pgrep mpd &>/dev/null; then
     mpc status 2>&1 | grep -q 'playing' || mpc play &>/dev/null
   else
@@ -122,6 +123,8 @@ fi
 if ! pgrep mpd &>/dev/null; then
   [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
 fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+find /data/music/ -iname *.mp3 -type f >/data/playlists/all.m3u
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 chmod 777 -Rf "/data/mpd" "/data/navidrome" "/data/music" "/data/playlists" "/config/mpd"
 chown -Rf mpd "/config/mpd" "/data/mpd"
