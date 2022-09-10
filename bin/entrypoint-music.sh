@@ -48,12 +48,10 @@ __exec_bash() {
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __start() {
-  if ! pgrep mpd &>/dev/null; then 
-    mpd --verbose /config/mpd/mpd.conf
-  fi
-  sleep 10
-  mpc queued | grep '^' mpc load all
+  pgrep mpd &>/dev/null || mpd "/config/mpd/mpd.conf"
+  sleep 3
   if pgrep mpd &>/dev/null; then
+    mpc queued 2>&1 | grep '^' || mpc load all
     mpc status 2>&1 | grep -q 'playing' || mpc play &>/dev/null
   else
     echo "MPD seems to have not started" 1>&2
@@ -124,7 +122,9 @@ if ! pgrep mpd &>/dev/null; then
   [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-find /data/music/ -iname *.mp3 -type f >/data/playlists/all.m3u
+if [ ! -f "/data/playlists/all.m3u" ]; then
+  find "/data/music/" -iname '*.mp3' -type f >"/data/playlists/all.m3u"
+fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 chmod 777 -Rf "/data/mpd" "/data/navidrome" "/data/music" "/data/playlists" "/config/mpd"
 chown -Rf mpd "/config/mpd" "/data/mpd"
