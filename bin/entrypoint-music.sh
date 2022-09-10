@@ -48,7 +48,9 @@ __exec_bash() {
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __start() {
-  pgrep mpd &>/dev/null || mpd /config/mpd/mpd.conf
+  if ! pgrep mpd &>/dev/null; then 
+    mpd --stderr --no-daemon --verbose /config/mpd/mpd.conf &>/data/mpd/mpd.debug &
+  fi
   sleep 10
   if pgrep mpd &>/dev/null; then
     mpc status 2>&1 | grep -q 'playing' || mpc play &>/dev/null
