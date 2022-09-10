@@ -47,6 +47,14 @@ __exec_bash() {
   return ${exitCode:-$?}
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+__mpd_start() {
+  sleep 10
+  mpd /config/mpd/mpd.conf
+  sleep 5
+  if pgrep mpd &>/dev/null && mpc status | grep -qv 'playing'; then
+    mpc play &>/dev/null
+  fi
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Define default variables
 TZ="${TZ:-America/New_York}"
 HOSTNAME="${HOSTNAME:-casjaysdev-bin}"
@@ -137,7 +145,7 @@ healthcheck) # Docker healthcheck
 
 *) # Execute primary command
   if [ $# -eq 0 ]; then
-    mpd "/config/mpd/mpd.conf"
+    __mpd_start &
     navidrome --configfile "/config/navidrome/navidrome.toml"
   else
     __exec_bash "$@"

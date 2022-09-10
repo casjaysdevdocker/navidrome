@@ -18,7 +18,7 @@ RUN mkdir -p /bin/ /config/ /data/ && \
   echo "http://dl-cdn.alpinelinux.org/alpine/$alpine_version/community" >> /etc/apk/repositories && \
   echo "http://dl-cdn.alpinelinux.org/alpine/$alpine_version/testing" >> /etc/apk/repositories && \
   apk update -U --no-cache && \
-  apk add --no-cache mpd navidrome
+  apk add --no-cache mpd mpc navidrome
 
 COPY ./bin/. /usr/local/bin/
 COPY ./config/. /etc/
