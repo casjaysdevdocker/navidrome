@@ -51,7 +51,7 @@ __mpd_start() {
   sleep 10
   mpd /config/mpd/mpd.conf
   sleep 5
-  if pgrep mpd &>/dev/null && mpc status | grep -qv 'playing'; then
+  if pgrep mpd &>/dev/null && ! mpc status | grep -q 'playing'; then
     mpc play &>/dev/null
   fi
 }
