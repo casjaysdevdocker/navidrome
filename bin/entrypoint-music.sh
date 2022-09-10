@@ -48,11 +48,12 @@ __exec_bash() {
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __mpd_start() {
+  pgrep mpd &>/dev/null || mpd /config/mpd/mpd.conf
   sleep 10
-  mpd /config/mpd/mpd.conf
-  sleep 5
   if pgrep mpd &>/dev/null; then 
-    mpc status | grep -q 'playing' || mpc play &>/dev/null
+    mpc status 2>&1 | grep -q 'playing' || mpc play &>/dev/null
+  else 
+    echo "MPD seems to have not started" 1>&2
   fi
 }
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
