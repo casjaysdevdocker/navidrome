@@ -121,7 +121,7 @@ if ! pgrep mpd &>/dev/null; then
   [ -f "/data/mpd/mpd.pid" ] && rm -Rf "/data/mpd/mpd.pid"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-chmod 777 -R /data/mpd /data/navidrome /data/music /data/playlists
+chmod 777 -Rf "/data/mpd" "/data/navidrome" "/data/music" "/data/playlists" "/config/mpd"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 case "$1" in
 --help) # Help message
