@@ -103,7 +103,7 @@ fi
 [ -d "/config/mpd" ] || mkdir -p "/config/mpd"
 [ -d "/config/navidrome" ] || mkdir -p "/config/navidrome"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-[ -f "/config/mpd/mpd.conf" ] || cp -Rf "/etc/mpd.conf" "/config/mpd/mpd.conf"
+[ -f "/config/mpd/mpd.conf" ] || cp -Rf "/etc/mpd/mpd.conf" "/config/mpd/mpd.conf"
 [ -f "/config/navidrome/navidrome.toml" ] || cp -Rf "/etc/navidrome/navidrome.toml" "/config/navidrome/navidrome.toml"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if ! pgrep mpd &>/dev/null; then
