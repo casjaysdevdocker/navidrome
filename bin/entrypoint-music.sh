@@ -49,7 +49,7 @@ __exec_bash() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 __start() {
   if ! pgrep mpd &>/dev/null; then 
-    mpd --stderr --no-daemon --verbose /config/mpd/mpd.conf &>/data/mpd/mpd.debug &
+    mpd --verbose /config/mpd/mpd.conf
   fi
   sleep 10
   if pgrep mpd &>/dev/null; then
