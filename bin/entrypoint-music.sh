@@ -122,6 +122,7 @@ if ! pgrep mpd &>/dev/null; then
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 chmod 777 -Rf "/data/mpd" "/data/navidrome" "/data/music" "/data/playlists" "/config/mpd"
+chown -Rf mpd "/config/mpd" "/data/mpd"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 case "$1" in
 --help) # Help message
