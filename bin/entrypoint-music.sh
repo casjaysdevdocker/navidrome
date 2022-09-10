@@ -54,6 +54,7 @@ __mpd_start() {
   if pgrep mpd &>/dev/null && mpc status | grep -qv 'playing'; then
     mpc play &>/dev/null
   fi
+}
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 # Define default variables
 TZ="${TZ:-America/New_York}"
