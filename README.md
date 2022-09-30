@@ -1,28 +1,29 @@
-## 👋 Welcome to music 🚀  
+## 👋 Welcome to navidrome 🚀  
 
- play music  
+navidrome  
   
   
 ## Run container
 
 ```shell
-dockermgr update music
+dockermgr update navidrome
 ```
 
 ### via command line
 
 ```shell
-docker pull casjaysdevdocker/music:latest && \
+docker pull casjaysdevdocker/navidrome:latest && \
 docker run -d \
 --restart always \
---name casjaysdevdocker-music \
---hostname casjaysdev-music \
+--name casjaysdevdocker-navidrome \
+--hostname casjaysdev-navidrome \
 -e TZ=${TIMEZONE:-America/New_York} \
--v $HOME/.local/share/docker/storage/music/data:/data \
--v $HOME/.local/share/docker/storage/music/config:/config \
+-v $HOME/Music:/data/music \
+-v $HOME/.local/share/docker/storage/navidrome/data:/data:z \
+-v $HOME/.local/share/docker/storage/navidrome/config:/config:z \
 -p 19020:80 \
 -p 6600:6600 \
-casjaysdevdocker/music:latest
+casjaysdevdocker/navidrome:latest
 ```
 
 ### via docker-compose
@@ -30,17 +31,19 @@ casjaysdevdocker/music:latest
 ```yaml
 version: "2"
 services:
-  music:
-    image: casjaysdevdocker/music
-    container_name: music
+  navidrome:
+    image: casjaysdevdocker/navidrome
+    container_name: navidrome
     environment:
       - TZ=America/New_York
-      - HOSTNAME=casjaysdev-music
+      - HOSTNAME=casjaysdev-navidrome
     volumes:
-      - $HOME/.local/share/docker/storage/music/data:/data:z
-      - $HOME/.local/share/docker/storage/music/config:/config:z
+      - $HOME/Music:/data/music:z
+      - $HOME/.local/share/docker/storage/navidrome/data:/data:z
+      - $HOME/.local/share/docker/storage/navidrome/config:/config:z
     ports:
-      - 80:80
+      - 19020:80
+      - 6600:6600
     restart: always
 ```
 

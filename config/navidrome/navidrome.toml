@@ -9,8 +9,8 @@ EnableTranscodingConfig = true
 TranscodingCacheSize = "500MB"
 ImageCacheSize = "100MB"
 AutoImportPlaylists = true
-UILoginBackgroundUrl = "https://source.unsplash.com/random/1600x900?music"
-UIWelcomeMessage = "Welcome to CasjaysDev music server"
+UILoginBackgroundUrl = "https://source.unsplash.com/random/1600x900?navidrome"
+UIWelcomeMessage = "Welcome to CasjaysDev navidrome server"
 EnableCoverAnimation = true
 RecentlyAddedByModTime = false
 CoverArtPriority = "embedded, cover.*, folder.*, front.*"
@@ -39,4 +39,3 @@ Extractor = "taglib"
 
 # [ListenBrainz]
 Enabled = true
-

@@ -5,10 +5,10 @@
 # @@Author           :  Jason Hempstead
 # @@Contact          :  jason@casjaysdev.com
 # @@License          :  WTFPL
-# @@ReadME           :  entrypoint-music.sh --help
+# @@ReadME           :  entrypoint-navidrome.sh --help
 # @@Copyright        :  Copyright: (c) 2022 Jason Hempstead, Casjays Developments
 # @@Created          :  Tuesday, Sep 06, 2022 21:32 EDT
-# @@File             :  entrypoint-music.sh
+# @@File             :  entrypoint-navidrome.sh
 # @@Description      :
 # @@Changelog        :  New script
 # @@TODO             :  Better documentation
@@ -123,10 +123,10 @@ if ! pgrep mpd &>/dev/null; then
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 if [ ! -f "/data/playlists/all.m3u" ]; then
-  find "/data/music/" -iname '*.mp3' -type f >"/data/playlists/all.m3u"
+  find "/data/navidrome/" -iname '*.mp3' -type f >"/data/playlists/all.m3u"
 fi
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-chmod 777 -Rf "/data/mpd" "/data/navidrome" "/data/music" "/data/playlists" "/config/mpd"
+chmod 777 -Rf "/data/mpd" "/data/navidrome" "/data/navidrome" "/data/playlists" "/config/mpd"
 chown -Rf mpd "/config/mpd" "/data/mpd"
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 case "$1" in

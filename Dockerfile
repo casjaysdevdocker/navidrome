@@ -3,7 +3,7 @@ FROM casjaysdevdocker/alpine:latest as build
 ARG alpine_version=edge
 
 ARG LICENSE=WTFPL \
-  IMAGE_NAME=music \
+  IMAGE_NAME=navidrome \
   TIMEZONE=America/New_York \
   PORT=80
 
@@ -28,10 +28,10 @@ COPY ./data/. /data/
 FROM scratch
 ARG BUILD_DATE="$(date +'%Y-%m-%d %H:%M')"
 
-LABEL org.label-schema.name="music" \
-  org.label-schema.description="Containerized version of music" \
-  org.label-schema.url="https://hub.docker.com/r/casjaysdevdocker/music" \
-  org.label-schema.vcs-url="https://github.com/casjaysdevdocker/music" \
+LABEL org.label-schema.name="navidrome" \
+  org.label-schema.description="Containerized version of navidrome" \
+  org.label-schema.url="https://hub.docker.com/r/casjaysdevdocker/navidrome" \
+  org.label-schema.vcs-url="https://github.com/casjaysdevdocker/navidrome" \
   org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.version=$BUILD_DATE \
   org.label-schema.vcs-ref=$BUILD_DATE \
@@ -43,7 +43,7 @@ LABEL org.label-schema.name="music" \
 
 ENV SHELL="/bin/bash" \
   TERM="xterm-256color" \
-  HOSTNAME="casjaysdev-music" \
+  HOSTNAME="casjaysdev-navidrome" \
   TZ="${TZ:-America/New_York}"
 
 WORKDIR /root
@@ -55,5 +55,5 @@ EXPOSE $PORT
 COPY --from=build /. /
 
 ENTRYPOINT [ "tini", "--" ]
-HEALTHCHECK CMD [ "/usr/local/bin/entrypoint-music.sh", "healthcheck" ]
-CMD [ "/usr/local/bin/entrypoint-music.sh" ]
+HEALTHCHECK CMD [ "/usr/local/bin/entrypoint-navidrome.sh", "healthcheck" ]
+CMD [ "/usr/local/bin/entrypoint-navidrome.sh" ]
