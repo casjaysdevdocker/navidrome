@@ -1,53 +1,79 @@
 ## 👋 Welcome to navidrome 🚀  
 
-navidrome  
+navidrome README  
   
   
-## Run container
+## Install my system scripts  
 
+```shell
+ sudo bash -c "$(curl -q -LSsf "https://github.com/systemmgr/installer/raw/main/install.sh")"
+ sudo systemmgr --config && sudo systemmgr install scripts  
+```
+  
+## Automatic install/update  
+  
 ```shell
 dockermgr update navidrome
 ```
-
-### via command line
-
+  
+## Install and run container
+  
 ```shell
-docker pull casjaysdevdocker/navidrome:latest && \
+dockerHome="/var/lib/srv/$USER/docker/casjaysdevdocker/navidrome/navidrome/latest/rootfs"
+mkdir -p "/var/lib/srv/$USER/docker/navidrome/rootfs"
+git clone "https://github.com/dockermgr/navidrome" "$HOME/.local/share/CasjaysDev/dockermgr/navidrome"
+cp -Rfva "$HOME/.local/share/CasjaysDev/dockermgr/navidrome/rootfs/." "$dockerHome/"
 docker run -d \
 --restart always \
---name casjaysdevdocker-navidrome \
---hostname casjaysdev-navidrome \
+--privileged \
+--name casjaysdevdocker-navidrome-latest \
+--hostname navidrome \
 -e TZ=${TIMEZONE:-America/New_York} \
--v $HOME/Music:/data/music \
--v $HOME/.local/share/docker/storage/navidrome/data:/data:z \
--v $HOME/.local/share/docker/storage/navidrome/config:/config:z \
--p 19020:80 \
--p 6600:6600 \
+-v "$dockerHome/data:/data:z" \
+-v "$dockerHome/config:/config:z" \
+-p 80:80 \
 casjaysdevdocker/navidrome:latest
 ```
-
-### via docker-compose
-
+  
+## via docker-compose  
+  
 ```yaml
 version: "2"
 services:
-  navidrome:
+  ProjectName:
     image: casjaysdevdocker/navidrome
-    container_name: navidrome
+    container_name: casjaysdevdocker-navidrome
     environment:
       - TZ=America/New_York
-      - HOSTNAME=casjaysdev-navidrome
+      - HOSTNAME=navidrome
     volumes:
-      - $HOME/Music:/data/music:z
-      - $HOME/.local/share/docker/storage/navidrome/data:/data:z
-      - $HOME/.local/share/docker/storage/navidrome/config:/config:z
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/navidrome/navidrome/latest/rootfs/data:/data:z"
+      - "/var/lib/srv/$USER/docker/casjaysdevdocker/navidrome/navidrome/latest/rootfs/config:/config:z"
     ports:
-      - 19020:80
-      - 6600:6600
+      - 80:80
     restart: always
 ```
-
+  
+## Get source files  
+  
+```shell
+dockermgr download src casjaysdevdocker/navidrome
+```
+  
+OR
+  
+```shell
+git clone "https://github.com/casjaysdevdocker/navidrome" "$HOME/Projects/github/casjaysdevdocker/navidrome"
+```
+  
+## Build container  
+  
+```shell
+cd "$HOME/Projects/github/casjaysdevdocker/navidrome"
+buildx 
+```
+  
 ## Authors  
-
-🤖 casjay: [Github](https://github.com/casjay) [Docker](https://hub.docker.com/r/casjay) 🤖  
-⛵ CasjaysDevdDocker: [Github](https://github.com/casjaysdev) [Docker](https://hub.docker.com/r/casjaysdevdocker) ⛵  
+  
+🤖 casjay: [Github](https://github.com/casjay) 🤖  
+⛵ casjaysdevdocker: [Github](https://github.com/casjaysdevdocker) [Docker](https://hub.docker.com/u/casjaysdevdocker) ⛵  
